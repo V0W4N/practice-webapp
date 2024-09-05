@@ -5,54 +5,66 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from "@headlessui/react";
 import { CustomFilterProps } from "@/types";
+import { updateSearchParams } from "@/utils";
 
 const CustomFilter = ({title, options}: CustomFilterProps) => {
-  const [selected, setSelected] = useState(options[0]);
+  const [selected, setSelected] = useState(options[0])
+  const router = useRouter()
+
+  const handleUpdateParams = (e: {title: string, value:string}) => {
+  const newPathName = updateSearchParams(title, e.value.toLowerCase())
+
+  router.push(newPathName, {scroll: false})
+  }
+
   return (
     <div className='w-fit'>
       <Listbox
         value={selected}
-        onChange={(e) => {
-          setSelected(e); // Update the selected option in state
+        onChange={(e)=>{
+          setSelected(e);
+          handleUpdateParams(e)
         }}
       >
         <div className='relative w-fit z-10'>
-          {/* Button for the listbox */}
-          <Listbox.Button className='custom-filter__btn'>
-            <span className='block truncate'>{selected.title}</span>
+          <ListboxButton className='custom-filter__btn'>
+            <span className='block truncate'>
+              {selected.title}
+            </span>
             <Image src='/chevron-up-down.svg' width={20} height={20} className='ml-4 object-contain' alt='chevron_up-down' />
-          </Listbox.Button>
-          {/* Transition for displaying the options */}
+          </ListboxButton>
           <Transition
-            as={Fragment} // group multiple elements without introducing an additional DOM node i.e., <></>
+            as={Fragment} 
             leave='transition ease-in duration-100'
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <Listbox.Options className='custom-filter__options'>
-              {/* Map over the options and display them as listbox options */}
+            <ListboxOptions 
+              anchor="bottom"
+              className="w-[var(--button-width)] rounded-lg 
+              border border-gray-100 bg-white 
+              [--anchor-gap:var(--spacing-1)] 
+              focus:outline-none cursor-pointer shadow-md z-20"
+            >
               {options.map((option) => (
-                <Listbox.Option
+                <ListboxOption
                   key={option.title}
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 px-4 ${
-                      active ? "bg-primary-blue text-white" : "text-gray-900"
-                    }`
-                  }
+                  className= "data-[focus]:bg-blue-100"
+                  
                   value={option}
                 >
                   {({ selected }) => (
                     <>
-                      <span className={`block truncate ${selected ? "font-medium" : "font-normal"}`} >
+                      <span className={`block ml-2 truncate ${selected ? "font-bold" : "font-normal"}`} >
                         {option.title}
                       </span>
                     </>
                   )}
-                </Listbox.Option>
+                </ListboxOption>
               ))}
-            </Listbox.Options>
+            </ListboxOptions>
           </Transition>
-        </div>
+          </div>
       </Listbox>
     </div>
   );
