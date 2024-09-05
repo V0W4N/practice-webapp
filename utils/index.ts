@@ -1,9 +1,22 @@
-export async function fetchCars() {
+import { CarProps, FilterProps } from "@/types";
+
+export async function fetchCars(filters: FilterProps) {
     const headers ={
         'x-rapidapi-key': '7eb590dc54msh6441347369b92dbp16bb33jsn985833915b93',
 		'x-rapidapi-host': 'cars-by-api-ninjas.p.rapidapi.com'
     }
-    const response = await fetch('https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=corolla', {headers: headers});
+
+    const {manufacturer, year, model, limit, fuel} = filters;
+    const url = new URL('https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=corolla')
+    
+    url.searchParams.append("make", manufacturer);
+    url.searchParams.append("year", `${year}`);
+    url.searchParams.append("model", model);
+    url.searchParams.append("limit", `${limit}`);
+    url.searchParams.append("fuel", fuel);
+
+    const response = await fetch(url,
+        {headers: headers});
     const result = await response.json();
     return result;
 }
@@ -22,3 +35,19 @@ export const calculateCarRent = (city_mpg: number, year: number) => {
   
     return rentalRatePerDay.toFixed(0);
   };
+
+
+  export const generateCarImageUrl =
+  (car: CarProps, angle? :string) =>
+  {
+    const url = new URL('localhost') 
+    // i hope that one service approves me 💀💀
+    const {make, year, model} = car;
+    url.searchParams.append("customer", "KEY");
+    url.searchParams.append('make', make)
+    url.searchParams.append('modelFamily', model.split(" ")[0])
+    url.searchParams.append('zoomType', 'fullscreen')
+    url.searchParams.append('modelYear', `${year}`)
+    url.searchParams.append('angle', `${angle}`)
+    return `${url}`
+  }
