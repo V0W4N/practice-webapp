@@ -1,3 +1,4 @@
+/*
 'use client';
 
 import { Fragment, useState } from "react";
@@ -66,4 +67,6 @@ const CustomFilter = ({title, options, setFilter}: CustomFilterProps) => {
   );
 }
 
+
 export default CustomFilter
+*/

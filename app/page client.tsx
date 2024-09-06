@@ -1,3 +1,5 @@
+
+/*
 'use client';
 import { CarCard, CustomButton, CustomFilter, Hero, SearchBar, ShowMore } from "@/components";
 import { fuels, manufacturers, yearsOfProduction } from "@/constants";
@@ -40,15 +42,15 @@ export default function Home() {
     console.log(fuel, year , limit, manufacturer, model)
   }, [fuel, year , limit, manufacturer, model])
   
-
-  /*const allCars = fetchCars({
+###
+  const allCars = fetchCars({
     manufacturer: searchParams.manufacturer || '',
     year: searchParams.year || 2022,
     fuel: searchParams.fuel || '',
     limit: searchParams.limit || 10,
     model: searchParams.model || '',
-  })*/ 
-
+  })
+ ###
 
 
 
@@ -120,3 +122,4 @@ export default function Home() {
     </main>
   );
 }
+*/

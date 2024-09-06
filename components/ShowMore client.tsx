@@ -1,3 +1,4 @@
+/*
 "use client";
 import { ShowMoreProps } from "@/types";
 import { useRouter } from "next/navigation"
@@ -25,3 +26,4 @@ const ShowMore = ({pageNumber, isNext, setLimit}: ShowMoreProps) => {
 }
 
 export default ShowMore
+*/

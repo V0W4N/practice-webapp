@@ -10,6 +10,10 @@ export interface CustomButtonProps {
     isDisabled?: boolean;
 }
 
+export interface SearchManufacturerProps {
+    selected: string;
+    setSelected: (selected: string) => void ;
+}
 
 export interface CarProps {
     city_mpg:number;
