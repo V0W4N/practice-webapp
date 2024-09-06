@@ -13,7 +13,7 @@ export async function fetchCars(filters: FilterProps) {
     url.searchParams.append("year", `${year}`);
     url.searchParams.append("model", model);
     url.searchParams.append("limit", `${limit}`);
-    url.searchParams.append("fuel", fuel);
+    url.searchParams.append("fuel_type", fuel);
 
     const response = await fetch(url,
         {headers: headers});
